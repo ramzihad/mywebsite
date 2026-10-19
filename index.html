@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f3ed">
+    <meta
+      name="description"
+      content="Research notes and projects exploring reliable, understandable, and human-centered AI."
+    >
+    <title>AI Research — Your Name</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f5f3ed;
+        --ink: #19271f;
+        --muted: #637067;
+        --line: #d9ddd4;
+        --accent: #d65d3b;
+        --green: #dce8d9;
+        --serif: Georgia, "Times New Roman", serif;
+        --sans: "Segoe UI", Helvetica, Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 64px));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        min-height: 88px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .wordmark {
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .wordmark span {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .site-nav {
+        display: flex;
+        gap: 32px;
+      }
+
+      .site-nav a {
+        color: var(--muted);
+        font-size: 12px;
+        text-decoration: none;
+        transition: color 160ms ease;
+      }
+
+      .site-nav a:hover,
+      .site-nav a:focus-visible {
+        color: var(--accent);
+      }
+
+      .hero {
+        min-height: 590px;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        gap: 64px;
+        padding: 82px 0 90px;
+      }
+
+      .eyebrow,
+      .section-label {
+        color: var(--accent);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 680px;
+        margin-bottom: 24px;
+        font-family: var(--serif);
+        font-size: clamp(56px, 7vw, 88px);
+        font-weight: 400;
+        letter-spacing: -0.065em;
+        line-height: 0.98;
+      }
+
+      h1 em {
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      .hero-copy {
+        max-width: 490px;
+        margin-bottom: 32px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid var(--ink);
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .text-link span {
+        color: var(--accent);
+        font-size: 17px;
+        line-height: 0.7;
+      }
+
+      .artwork {
+        position: relative;
+        width: 100%;
+        max-width: 390px;
+        aspect-ratio: 1;
+        justify-self: end;
+        overflow: hidden;
+        border-radius: 50%;
+        background: #e8e5da;
+      }
+
+      .artwork::before,
+      .artwork::after {
+        position: absolute;
+        content: "";
+        border: 1px solid rgba(25, 39, 31, 0.2);
+        border-radius: 50%;
+      }
+
+      .artwork::before {
+        inset: 10%;
+      }
+
+      .artwork::after {
+        inset: 23%;
+      }
+
+      .orbit {
+        position: absolute;
+        z-index: 1;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .orbit-one {
+        top: 19%;
+        left: 32%;
+      }
+
+      .orbit-two {
+        top: 57%;
+        right: 13%;
+        width: 8px;
+        height: 8px;
+        background: #6a876a;
+      }
+
+      .orbit-three {
+        bottom: 16%;
+        left: 38%;
+        width: 6px;
+        height: 6px;
+      }
+
+      .artwork svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .hero-note {
+        position: absolute;
+        right: 5%;
+        bottom: 18%;
+        color: var(--muted);
+        font-size: 9px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transform: rotate(-90deg);
+        transform-origin: right;
+      }
+
+      .section {
+        padding: 88px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 0.7fr 1.3fr;
+        gap: 48px;
+        margin-bottom: 48px;
+      }
+
+      .section-label {
+        padding-top: 9px;
+      }
+
+      h2 {
+        max-width: 670px;
+        margin-bottom: 0;
+        font-family: var(--serif);
+        font-size: clamp(36px, 5vw, 56px);
+        font-weight: 400;
+        letter-spacing: -0.045em;
+        line-height: 1.1;
+      }
+
+      .intro {
+        max-width: 650px;
+        margin: 0 0 0 auto;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.85;
+      }
+
+      .themes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .theme {
+        min-height: 230px;
+        padding: 25px 28px 28px 0;
+      }
+
+      .theme + .theme {
+        padding-left: 28px;
+        border-left: 1px solid var(--line);
+      }
+
+      .theme-number {
+        color: var(--accent);
+        font-family: var(--serif);
+        font-size: 18px;
+      }
+
+      h3 {
+        margin: 38px 0 12px;
+        font-family: var(--serif);
+        font-size: 26px;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+      }
+
+      .theme p {
+        max-width: 290px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .approach {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 80px;
+      }
+
+      .approach-copy h2 {
+        margin: 18px 0;
+      }
+
+      .approach-copy p {
+        max-width: 450px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.85;
+      }
+
+      .steps {
+        display: grid;
+        gap: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 16px;
+        padding: 19px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .step-number {
+        color: var(--accent);
+        font-family: var(--serif);
+        font-size: 18px;
+      }
+
+      .step strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 13px;
+      }
+
+      .step p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .contact {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 32px;
+        padding: 68px 0 76px;
+        border-top: 1px solid var(--line);
+      }
+
+      .contact h2 {
+        max-width: 560px;
+        margin-top: 16px;
+      }
+
+      .contact p {
+        max-width: 230px;
+        margin-bottom: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0 28px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+      }
+
+      @media (max-width: 760px) {
+        .page {
+          width: min(100% - 40px, 560px);
+        }
+
+        .site-header {
+          min-height: 76px;
+        }
+
+        .site-nav {
+          gap: 16px;
+        }
+
+        .site-nav a {
+          font-size: 11px;
+        }
+
+        .hero {
+          min-height: 0;
+          grid-template-columns: 1fr;
+          gap: 48px;
+          padding: 76px 0;
+        }
+
+        .artwork {
+          width: min(74vw, 340px);
+          justify-self: center;
+        }
+
+        .section {
+          padding: 68px 0;
+        }
+
+        .section-heading {
+          grid-template-columns: 1fr;
+          gap: 20px;
+          margin-bottom: 34px;
+        }
+
+        .intro {
+          margin-left: 0;
+        }
+
+        .themes {
+          grid-template-columns: 1fr;
+        }
+
+        .theme {
+          min-height: 0;
+          padding: 22px 0 26px;
+        }
+
+        .theme + .theme {
+          padding-left: 0;
+          border-top: 1px solid var(--line);
+          border-left: 0;
+        }
+
+        h3 {
+          margin-top: 23px;
+        }
+
+        .approach {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+
+        .contact {
+          align-items: start;
+          flex-direction: column;
+          padding: 60px 0;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .page {
+          width: calc(100% - 32px);
+        }
+
+        .site-nav {
+          gap: 12px;
+        }
+
+        .site-nav a {
+          font-size: 10px;
+        }
+
+        .wordmark {
+          font-size: 11px;
+        }
+
+        .wordmark span {
+          font-size: 8px;
+        }
+
+        footer {
+          gap: 16px;
+          font-size: 9px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="wordmark" href="#top">
+          YOUR NAME
+          <span>AI research</span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="#research">Research</a>
+          <a href="#approach">Approach</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <div>
+            <p class="eyebrow">Independent research · Artificial intelligence</p>
+            <h1 id="hero-title">Building AI we can <em>understand.</em></h1>
+            <p class="hero-copy">
+              I explore how to make intelligent systems more reliable,
+              interpretable, and useful to the people who depend on them.
+            </p>
+            <a class="text-link" href="#research">
+              Explore my research <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+
+          <div class="artwork" role="img" aria-label="Abstract diagram of connected research ideas">
+            <svg viewBox="0 0 400 400" aria-hidden="true">
+              <path d="M52 234C106 94 263 58 345 147c51 56 8 159-75 183-72 21-156-14-153-81 3-73 107-113 174-75 57 32 43 107-4 127-39 17-87-4-85-42 2-34 36-54 68-42" fill="none" stroke="#70816f" stroke-width="1.2" />
+              <path d="M67 271c55-46 96-84 135-127 40-43 94-33 122 8" fill="none" stroke="#d65d3b" stroke-width="1.2" />
+              <circle cx="202" cy="201" r="28" fill="#dce8d9" />
+              <circle cx="202" cy="201" r="5" fill="#19271f" />
+              <path d="M202 173v-43M230 201h48M202 229v40M174 201h-43" stroke="#19271f" stroke-width="1" />
+            </svg>
+            <span class="orbit orbit-one"></span>
+            <span class="orbit orbit-two"></span>
+            <span class="orbit orbit-three"></span>
+            <span class="hero-note">Questions · systems · people</span>
+          </div>
+        </section>
+
+        <section class="section" id="research" aria-labelledby="research-title">
+          <div class="section-heading">
+            <p class="section-label">01 / Research</p>
+            <div>
+              <h2 id="research-title">Questions worth getting right.</h2>
+              <p class="intro">
+                My work sits at the intersection of machine learning and
+                real-world impact. I’m especially interested in the questions
+                that help AI earn trust—not just attention.
+              </p>
+            </div>
+          </div>
+
+          <div class="themes">
+            <article class="theme">
+              <span class="theme-number">01</span>
+              <h3>Reliable AI</h3>
+              <p>How can models remain useful when inputs, settings, or expectations change?</p>
+            </article>
+            <article class="theme">
+              <span class="theme-number">02</span>
+              <h3>Interpretability</h3>
+              <p>What can we learn about a model’s behavior, and how can that knowledge guide us?</p>
+            </article>
+            <article class="theme">
+              <span class="theme-number">03</span>
+              <h3>Human-centered systems</h3>
+              <p>How should intelligent tools fit into the decisions and workflows people already make?</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section approach" id="approach" aria-labelledby="approach-title">
+          <div class="approach-copy">
+            <p class="section-label">02 / Approach</p>
+            <h2 id="approach-title">From a sharp question to useful evidence.</h2>
+            <p>
+              Good research starts with curiosity and gets stronger through
+              careful measurement. I value clear questions, transparent
+              methods, and results that hold up beyond a single benchmark.
+            </p>
+          </div>
+          <div class="steps" aria-label="Research process">
+            <div class="step">
+              <span class="step-number">01</span>
+              <div>
+                <strong>Frame the question</strong>
+                <p>Make the problem concrete, relevant, and testable.</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">02</span>
+              <div>
+                <strong>Build and investigate</strong>
+                <p>Choose methods that reveal what a system can—and cannot—do.</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">03</span>
+              <div>
+                <strong>Share what we learn</strong>
+                <p>Communicate findings with context, limitations, and care.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="contact" id="contact" aria-labelledby="contact-title">
+          <div>
+            <p class="section-label">03 / Get in touch</p>
+            <h2 id="contact-title">Have a good question in mind?</h2>
+          </div>
+          <p>
+            I’m always glad to hear from fellow researchers and thoughtful
+            collaborators.
+          </p>
+        </section>
+      </main>
+
+      <footer>
+        <span>© 2026 Your Name</span>
+        <span>Research with care. Build with purpose.</span>
+      </footer>
+    </div>
+  </body>
+</html>
